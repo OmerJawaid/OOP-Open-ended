@@ -18,6 +18,9 @@ public:
 	void enrollCourse(Course*course) ;
 	void dropCourse(Course*course) ;
 	void viewCourses(Course*course);
+	string getstudentname() {
+		return name;
+	}
 };
 void Student::enrollCourse(Course*course) {
 	coursesEnrolled.push_back(course);
