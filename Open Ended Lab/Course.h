@@ -1,4 +1,12 @@
 #pragma once
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+class Student;
+class Teacher;
+
 class Course
 {
 private:
@@ -7,20 +15,9 @@ private:
 	Teacher*teacher;
 	vector<Student*> studentenroll;
 public:
-	void addStudent(Student*student) {
-		studentenroll.push_back(student);
-	}
-	void removeStudent(Student*student){
-		for (auto en = studentenroll.begin(); en != studentenroll.end(); en++)
-			if(*en==student)
-			studentenroll.erase(en);
-	}
-	void viewStudents(Student*student){
-		for (auto i : studentenroll)
-			cout << student->getstudentname()<<endl;
-	}
-	string getcoursename() {
-		return coursename;
-	}
+	void addStudent(Student* student);
+	void removeStudent(Student* student);
+	void viewStudents();
+	string getcoursename();
 };
 
