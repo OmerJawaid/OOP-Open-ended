@@ -20,12 +20,9 @@ void Teacher::removeCourse(Course* course)
 }
 void Teacher::viewCourse(Course* course)
 {
+	cout << "Courses Taught by \a" << name << " are :" << endl;
 	for (auto view = coursesTaught.begin(); view != coursesTaught.end(); view++)
 	{
-		cout << "Courses Taught by : " << name << "is " << endl;
-		for (auto corname = coursesTaught.begin(); corname != coursesTaught.end(); corname++)
-		{
-			cout << course->getcoursename() << endl;
-		}
+		cout << (*view)->getcoursename() << endl;
 	}
 }

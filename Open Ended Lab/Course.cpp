@@ -14,7 +14,7 @@ void Course:: removeStudent(Student* student) {
 	}
 void Course::viewStudents() const {
 	for (auto i : studentenroll)
-		cout << i->getstudentname() << endl;
+		cout << "Name: " << i->getstudentname() << "\tSection: " << i->getsection() << endl;
 }
 string Course::getcoursename() const {
 	return coursename;
