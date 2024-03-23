@@ -17,7 +17,8 @@ private:
 	vector<Student*> studentenroll;
 	Room* assignedRoom;
 public:
-	Course(int courseCode, string& coursename) {};
+	Course(int courseCode, const string& coursename, Teacher* teacher, Room* assignedRoom)
+		: courseCode(courseCode), coursename(coursename), teacher(teacher), assignedRoom(assignedRoom) {}
 	void addStudent(Student* student);
 	void removeStudent(Student* student);
 	void viewStudents ()const;

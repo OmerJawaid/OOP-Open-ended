@@ -19,5 +19,5 @@ public:
 	void dropCourse(Course*course) ;
 	void viewCourses(Course*course);
 	string getstudentname();
-	string getsection();
+	string getsection()const;
 };
