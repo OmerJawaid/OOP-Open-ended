@@ -1,5 +1,6 @@
 #include"Course.h"
 #include"Student.h"
+#include"Room.h"
 using namespace std;
 
 void Course::addStudent(Student* student) {

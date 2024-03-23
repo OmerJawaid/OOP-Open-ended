@@ -6,6 +6,7 @@ using namespace std;
 
 class Student;
 class Teacher;
+class Room;
 
 class Course
 {
@@ -14,6 +15,7 @@ private:
 	string coursename;
 	Teacher*teacher;
 	vector<Student*> studentenroll;
+	Room* Bookroom[4];
 public:
 	void addStudent(Student* student);
 	void removeStudent(Student* student);

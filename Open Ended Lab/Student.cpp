@@ -19,3 +19,6 @@ void Student::viewCourses(Course* course) {
 string Student::getstudentname() {
 	return name;
 }
+string Student::getsection(){
+	return section;
+}
