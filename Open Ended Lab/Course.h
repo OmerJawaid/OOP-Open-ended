@@ -15,11 +15,16 @@ private:
 	string coursename;
 	Teacher*teacher;
 	vector<Student*> studentenroll;
-	Room* Bookroom[4];
+	Room* assignedRoom;
 public:
+	Course(int courseCode, string& coursename) {};
 	void addStudent(Student* student);
 	void removeStudent(Student* student);
-	void viewStudents();
-	string getcoursename();
+	void viewStudents ()const;
+	string getcoursename ()const;
+	int getcoursecode()const;
+	Teacher* getteacher()const;
+	Room* getAssignedRoom()const;
+	vector<Student*> getEnrolledStudents()const;
 };
 

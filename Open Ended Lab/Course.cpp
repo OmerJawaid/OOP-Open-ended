@@ -12,10 +12,22 @@ void Course:: removeStudent(Student* student) {
 		studentenroll.erase(it);
 	}
 	}
-void Course::viewStudents() {
+void Course::viewStudents() const {
 	for (auto i : studentenroll)
 		cout << i->getstudentname() << endl;
 }
-string Course::getcoursename() {
+string Course::getcoursename() const {
 	return coursename;
 }
+int Course::getcoursecode()const {
+	return courseCode;
+};
+Teacher* Course::getteacher()const {
+	return teacher;
+};
+Room* Course::getAssignedRoom()const {
+	return assignedRoom;
+};
+vector<Student*> Course::getEnrolledStudents()const {
+	return studentenroll;
+};
