@@ -4,18 +4,19 @@
 #include<vector>
 #include"Course.h"
 #include"Teacher.h"
+#include"Time.h"
 using namespace std;
 class Timetable
 {
 public:
 	vector<Time*> times;
 	void declareTimes() {
-		times.emplace_back("8:30", "9:25");
-		times.emplace_back("9:30", "10:25");
-		times.emplace_back("10:30", "11:25");
-		times.emplace_back("11:30", "12:25");
-		times.emplace_back("12:30", "1:25");
-		times.emplace_back("1:30", "2:25");
+		times.push_back(new Time("8:30", "9:25"));
+		times.push_back(new Time("9:30", "10:25"));
+		times.push_back(new Time("10:30", "11:25"));
+		times.push_back(new Time("11:30", "12:25"));
+		times.push_back(new Time("12:30", "1:25"));
+		times.push_back(new Time("1:30", "2:25"));
 	}
 	void teacherTimetable() {
 		map<string, vector<Course*>> courses;
