@@ -44,5 +44,11 @@
     <ClInclude Include="Timetable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Section.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

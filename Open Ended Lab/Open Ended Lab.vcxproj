@@ -135,8 +135,10 @@
   <ItemGroup>
     <ClInclude Include="Course.h" />
     <ClInclude Include="Room.h" />
+    <ClInclude Include="Section.h" />
     <ClInclude Include="Student.h" />
     <ClInclude Include="Teacher.h" />
+    <ClInclude Include="Time.h" />
     <ClInclude Include="Timetable.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

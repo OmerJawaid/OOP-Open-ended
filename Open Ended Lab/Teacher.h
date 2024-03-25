@@ -16,4 +16,8 @@ public:
 	void assignCourse(Course* course);
 	void removeCourse(Course* course);
 	void viewCourse(Course* course);
+	string getName()
+	{
+		return name;
+	}
 };
