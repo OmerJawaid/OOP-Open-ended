@@ -7,7 +7,6 @@ using namespace std;
 class Student;
 class Teacher;
 class Room;
-
 class Course
 {
 private:
@@ -26,6 +25,7 @@ public:
 	int getcoursecode()const;
 	Teacher* getteacher()const;
 	Room* getAssignedRoom()const;
+	void setAssignedRoom(Room* room);
 	vector<Student*> getEnrolledStudents()const;
 };
 
