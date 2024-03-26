@@ -9,9 +9,10 @@ class Student
 private:
 	int studentID;
 	string name,email,section;
-	vector<Course*>coursesEnrolled;
+	
 	
 public:
+	vector<Course*>coursesEnrolled;
 	Student(int ID, string na, string mail,string sec) :studentID(ID), name(na), email(mail), section(sec) {
 		cout << "Student constructor called" << endl;
 	};

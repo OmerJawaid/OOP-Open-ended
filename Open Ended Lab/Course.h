@@ -12,10 +12,11 @@ class Course
 private:
 	int courseCode;
 	string coursename;
-	Teacher*teacher;
-	vector<Student*> studentenroll;
 	Room* assignedRoom;
+	string startTime, endTime;
 public:
+	Teacher* teacher;
+	vector<Student*> studentenroll;
 	Course(int courseCode, const string& coursename, Teacher* teacher, Room* assignedRoom)
 		: courseCode(courseCode), coursename(coursename), teacher(teacher), assignedRoom(assignedRoom) {}
 	void addStudent(Student* student);
