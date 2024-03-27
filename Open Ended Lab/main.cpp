@@ -48,6 +48,7 @@ int main() {
 		}
 		else if (generationchoice == "4")
 		{
+			timetable1.roomTimetable();
 		}
 		else if (generationchoice == "5")
 		{

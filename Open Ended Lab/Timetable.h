@@ -169,4 +169,63 @@ public:
         times.push_back(new Time("1:30", "2:30"));
         return times;
     }
+    void roomTimetable() {
+        // Build the timetable
+        buildTimetable();
+
+        // Iterate over days
+        for (const auto& day : sectionCourses) {
+            cout << "Day: " << day.first << endl;
+
+            // Create a map to store courses by room
+            map<Room*, vector<tuple<Course*, Time*, Section*>>> roomCourses;
+
+            // Iterate over sections for the day
+            for (const auto& sectionPair : day.second) {
+                // Get the section name
+                const string& sectionName = sectionPair.first;
+
+                // Iterate over courses for the section
+                for (const auto& courseTimeRoomTuple : sectionPair.second) {
+                    Course* course = get<0>(courseTimeRoomTuple);
+                    Time* time = get<1>(courseTimeRoomTuple);
+                    Room* room = get<2>(courseTimeRoomTuple);
+
+                    // Find the section object from its name
+                    Section* section = nullptr;
+                    for (const auto& sectionCoursesPair : sectionCourses[day.first]) {
+                        if (sectionCoursesPair.first == sectionName) {
+                            // Iterate over the tuples to find the section
+                            for (const auto& tuple : sectionCoursesPair.second) {
+                                Course* course = std::get<0>(tuple);
+                                // Assuming each tuple contains the same section, get the section from any tuple
+                                section = course->getAssignedSection();
+                                break;
+                            }
+                            break;
+                        }
+                    }
+
+                    // Add the course to the corresponding room
+                    roomCourses[room].push_back(make_tuple(course, time, section));
+                }
+            }
+
+            // Display room-wise timetable for the current day
+            for (const auto& roomCoursePair : roomCourses) {
+                Room* room = roomCoursePair.first;
+                vector<tuple<Course*, Time*, Section*>> courses = roomCoursePair.second;
+
+                cout << "Room: " << room->getRoomNumber() << endl;
+                for (const auto& courseTimeSectionTuple : courses) {
+                    Course* course = get<0>(courseTimeSectionTuple);
+                    Time* time = get<1>(courseTimeSectionTuple);
+                    Section* section = get<2>(courseTimeSectionTuple);
+
+                    cout << "Course: " << course->getCourseName() << ", Time: " << time->getStartTime() << " - " << time->getEndTime() << ", Section: " << section->getName() << endl;
+                }
+                cout << "-----------------------------" << endl;
+            }
+        }
+    }
 };
