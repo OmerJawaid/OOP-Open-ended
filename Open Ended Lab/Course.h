@@ -1,32 +1,41 @@
+// Course.h
 #pragma once
 #include <iostream>
 #include <string>
 #include <vector>
-using namespace std;
+#include "Teacher.h"
+#include "Room.h"
+#include "Section.h"
+#include "Time.h" 
 
-class Student;
-class Teacher;
-class Room;
-class Course
-{
+class Student; // Forward declaration of Student class
+
+class Course {
 private:
-	int courseCode;
-	string coursename;
-	Room* assignedRoom;
-	string startTime, endTime;
-public:
-	Teacher* teacher;
-	vector<Student*> studentenroll;
-	Course(int courseCode, const string& coursename, Teacher* teacher, Room* assignedRoom)
-		: courseCode(courseCode), coursename(coursename), teacher(teacher), assignedRoom(assignedRoom) {}
-	void addStudent(Student* student);
-	void removeStudent(Student* student);
-	void viewStudents ()const;
-	string getcoursename ()const;
-	int getcoursecode()const;
-	Teacher* getteacher()const;
-	Room* getAssignedRoom()const;
-	void setAssignedRoom(Room* room);
-	vector<Student*> getEnrolledStudents()const;
-};
+    int courseCode;
+    std::string courseName;
+    Room* assignedRoom;
+    Teacher* teacher;
+    Section* assignedSection;
+    Time* assignedTime;
 
+public:
+    std::vector<Student*> enrolledStudents;
+
+    Course(int courseCode, const std::string& courseName, Teacher* teacher, Room* assignedRoom)
+        : courseCode(courseCode), courseName(courseName), teacher(teacher), assignedRoom(assignedRoom), assignedSection(nullptr), assignedTime(nullptr) {}
+
+    void addStudent(Student* student);
+    void removeStudent(Student* student);
+    void viewStudents() const;
+
+    std::string getCourseName() const;
+    int getCourseCode() const;
+    Teacher* getTeacher() const;
+    Room* getAssignedRoom() const;
+    Section* getAssignedSection() const;
+    Time* getAssignedTime() const;
+    void setAssignedSection(Section* section);
+
+    std::vector<Student*> getEnrolledStudents() const;
+};

@@ -13,7 +13,7 @@ void Student::viewCourses(Course* course) {
 	cout << "Courses Enrolled: ";
 	for (auto i : coursesEnrolled)
 	{
-		cout << course->getcoursename() << endl;
+		cout << course->getCourseName() << endl;
 	}
 }
 string Student::getstudentname() {
