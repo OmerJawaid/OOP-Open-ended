@@ -28,26 +28,26 @@ public:
 
         vector<Time*> times = createTimeSlots();
 
-        // Create sections
+        
         Section* section1 = new Section("SE-01");
         Section* section2 = new Section("SE-02");
 
-        // Create students
-        Student* student1 = new Student(301, "John", "john@example.com", "2-A");
-        Student* student2 = new Student(302, "Alice", "alice@example.com", "2-B");
+        
+        Student* student1 = new Student(301, "Ahmad", "ahmad@gmail.com", "2-A");
+        Student* student2 = new Student(302, "omer", "omer@gmail.com", "2-B");
 
-        // Create courses and assign sections
+        
         Course* course1 = new Course(403, "OOP", teacher1, room1);
         course1->setAssignedSection(section1);
-        course1->addStudent(student1);  // Enroll student1 in course1
+        course1->addStudent(student1);  
         Course* course2 = new Course(404, "DS", teacher2, room1);
         course2->setAssignedSection(section2);
-        course2->addStudent(student2);  // Enroll student2 in course2
+        course2->addStudent(student2);  
         Course* course3 = new Course(405, "Algorithms", teacher3, room1);
         course3->setAssignedSection(section1);
-        course3->addStudent(student1);  // Enroll student1 in course3
+        course3->addStudent(student1);  
 
-        // Populate timetable with courses, times, and rooms
+    
         sectionCourses["Monday"][section1->getName()].push_back(make_tuple(course1, times[0], room1));
         sectionCourses["Monday"][section2->getName()].push_back(make_tuple(course2, times[1], room3));
         sectionCourses["Tuesday"][section1->getName()].push_back(make_tuple(course3, times[0], room2));
@@ -56,23 +56,23 @@ public:
     void teacherTimetable() {
         buildTimetable();
 
-        // Map of teacher -> courses
+        
         map<Teacher*, vector<tuple<Course*, Time*, Room*>>> teacherCourses;
 
-        // Iterate over days
+        
         for (const auto& day : sectionCourses) {
             cout << "Day: " << day.first << endl;
 
-            // Iterate over sections for the day
+            
             for (const auto& sectionPair : day.second) {
-                // Iterate over courses for the section
+            
                 for (const auto& courseTimeRoomTuple : sectionPair.second) {
                     Teacher* teacher = get<0>(courseTimeRoomTuple)->getTeacher();
                     teacherCourses[teacher].push_back(courseTimeRoomTuple);
                 }
             }
 
-            // Display teacher timetable for the current day
+            
             for (const auto& teacherCoursePair : teacherCourses) {
                 Teacher* teacher = teacherCoursePair.first;
                 vector<tuple<Course*, Time*, Room*>> courses = teacherCoursePair.second;
@@ -93,29 +93,24 @@ public:
     void studentTimetable() {
         buildTimetable();
 
-        // Map of student -> courses
+        
         map<Student*, vector<tuple<Course*, Time*, Room*>>> studentCourses;
 
-        // Iterate over days
         for (const auto& day : sectionCourses) {
             cout << "Day: " << day.first << endl;
 
-            // Iterate over sections for the day
             for (const auto& sectionPair : day.second) {
-                // Iterate over courses for the section
                 for (const auto& courseTimeRoomTuple : sectionPair.second) {
                     Course* course = get<0>(courseTimeRoomTuple);
                     Time* time = get<1>(courseTimeRoomTuple);
                     Room* room = get<2>(courseTimeRoomTuple);
 
-                    // Iterate over enrolled students for the course
                     for (Student* student : course->getEnrolledStudents()) {
                         studentCourses[student].push_back(courseTimeRoomTuple);
                     }
                 }
             }
 
-            // Display student timetable for the current day
             for (const auto& studentCoursePair : studentCourses) {
                 Student* student = studentCoursePair.first;
                 vector<tuple<Course*, Time*, Room*>> courses = studentCoursePair.second;
@@ -134,29 +129,7 @@ public:
 
 
     void sectionTimetable() {
-        //buildTimetable();
-
-        //// Iterate over days
-        //for (const auto& day : sectionCourses) {
-        //    cout << "Day: " << day.first << endl;
-
-        //    // Iterate over sections for the day
-        //    for (const auto& sectionPair : day.second) {
-        //        cout << "Section: " << sectionPair.first << endl;
-
-        //        // Check if there are any courses for this section
-        //        if (sectionPair.second.empty()) {
-        //            cout << "No courses for this section." << endl;
-        //        }
-        //        else {
-        //            // Iterate over courses for the section
-        //            for (const auto& courseTimePair : sectionPair.second) {
-        //                cout << "Course: " << courseTimePair.first->getCourseName();
-        //                cout << ", Time: " << courseTimePair.second->getStartTime() << " - " << courseTimePair.second->getEndTime() << endl;
-        //            }
-        //        }
-        //    }
-        //}
+       
     }
 
     vector<Time*> createTimeSlots() {
