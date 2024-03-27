@@ -52,12 +52,38 @@ int main() {
 		}
 		else if (generationchoice == "5")
 		{
+			string query;
+			do {
+				cout << "Who is teaching on this day and time?" << endl
+					<< "What is timetable for this day?" << endl
+					<< "Enter your query: ";
+				cin >> query;
+				if (query == "1")
+				{
+					string day, time;
+					cout << "Enter day and time: ";
+					cin >> day >> time;
+					timetable1.whoIsTeachingAt(day, time);
+				}
+				else if (query == "2")
+				{
+					string day;
+					cout << "Enter day: ";
+					cin >> day;
+					timetable1.getTimeTableForDay(day);
+
+				}
+				else
+					cout << "Invalid query! Try Again" << endl;
+			} while (query != "1" && query != "2");
 		}
 		else if (generationchoice == "6")
 		{
 			return 0;
 		}
 		else
+		{
 			cout << "Invalid choice" << endl;
+		}
 	} while (generationchoice != "6");
 }
