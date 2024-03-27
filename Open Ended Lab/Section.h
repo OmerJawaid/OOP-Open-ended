@@ -2,16 +2,18 @@
 #include <string>
 #include <vector>
 #include <algorithm> // Include the algorithm header for std::find
-#include "Student.h" // Include the header where Student class is declared
+#include "Student.h"
+#include"Course.h"// Include the header where Student class is declared
 class Student;
+class Course;
 using namespace std;
 class Section {
 private:
     std::string name;
     std::vector<Student*> students;
-
+    /*vector<Course*> courses;*/
 public:
-    Section(const std::string& name) : name(name) {}
+    Section(const string& name) : name(name){};
 
     const std::string& getName() const {
         return name;

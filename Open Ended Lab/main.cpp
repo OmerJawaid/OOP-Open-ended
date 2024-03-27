@@ -1,27 +1,28 @@
 #include<iostream>
-#include<map>
-#include<vector>
-#include "Student.h"
-#include "Teacher.h"
-#include "Course.h"
-#include "Room.h"
+//#include<map>
+//#include<vector>
+//#include "Student.h"
+//#include "Teacher.h"
+//#include "Course.h"
+//#include "Room.h"
 #include "Timetable.h"
-#include "Section.h"
-#include "Time.h"
+//#include "Section.h"
+//#include "Time.h"
 int main() {
-	Student student1(201, "Omer", "omerjawaid0@gmail.com", "2-A");
-	Teacher* teacher1 = new Teacher("Waleed", 201, "Waleed123@gmail.com");
-	Room room1("202", 50);
-	Course course1(201, "OOP", teacher1, &room1);	/*Course(int courseCode, const string & coursename, Teacher * teacher, Room * assignedRoom)*/
-	Course course2(202, "DS", teacher1, &room1);
-	course1.addStudent(&student1);
-	course1.viewStudents();
-	teacher1->assignCourse(&course1);
-	teacher1->assignCourse(&course2);
-	teacher1->viewCourse(&course1);
+	//Student student1(201, "Omer", "omerjawaid0@gmail.com", "2-A");
+	//Teacher* teacher1 = new Teacher("Waleed", 201, "Waleed123@gmail.com");
+	//Room room1("202", 50);
+	//Course course1(201, "OOP", teacher1, &room1);	/*Course(int courseCode, const string & coursename, Teacher * teacher, Room * assignedRoom)*/
+	//Course course2(202, "DS", teacher1, &room1);
+	//course1.addStudent(&student1);
+	//course1.viewStudents();
+	//teacher1->assignCourse(&course1);
+	//teacher1->assignCourse(&course2);
+	//teacher1->viewCourse(&course1);
 	Timetable timetable1;
 	string generationchoice;
-	vector<Teacher*> teachers = { teacher1 };
+	timetable1.buildTimetable();
+	/*vector<Teacher*> teachers = { teacher1 };*/
 	cout << "Welcome to University Timetable System" << endl;
 	do {
 		cout << "----------------------------------------" << endl
@@ -41,6 +42,7 @@ int main() {
 		}
 		else if (generationchoice == "2")
 		{
+			timetable1.sectionTimetable();
 		}
 		else if (generationchoice == "3")
 		{

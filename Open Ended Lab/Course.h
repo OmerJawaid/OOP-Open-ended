@@ -23,17 +23,16 @@ public:
     std::vector<Student*> enrolledStudents;
 
     Course(int courseCode, const std::string& courseName, Teacher* teacher, Room* assignedRoom)
-        : courseCode(courseCode), courseName(courseName), teacher(teacher), assignedRoom(assignedRoom), assignedSection(nullptr), assignedTime(nullptr) {}
+        : courseCode(courseCode), courseName(courseName), teacher(teacher), assignedRoom(assignedRoom), assignedTime(nullptr) {}
 
     void addStudent(Student* student);
     void removeStudent(Student* student);
     void viewStudents() const;
-
+    Section* getAssignedSection() const;
     std::string getCourseName() const;
     int getCourseCode() const;
     Teacher* getTeacher() const;
     Room* getAssignedRoom() const;
-    Section* getAssignedSection() const;
     Time* getAssignedTime() const;
     void setAssignedSection(Section* section);
 
