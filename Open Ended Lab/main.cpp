@@ -44,6 +44,7 @@ int main() {
 		}
 		else if (generationchoice == "3")
 		{
+			timetable1.studentTimetable();
 		}
 		else if (generationchoice == "4")
 		{

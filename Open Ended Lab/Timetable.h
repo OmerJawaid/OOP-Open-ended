@@ -32,6 +32,9 @@ public:
         Section* section1 = new Section("SE-01");
         Section* section2 = new Section("SE-02");
 
+        Student* student1 = new Student(301, "John", "john@example.com", "2-A");
+        Student* student2 = new Student(302, "Alice", "alice@example.com", "2-B");
+
         // Create courses and assign sections
         Course* course1 = new Course(403, "OOP", teacher1, room1);
         course1->setAssignedSection(section1);
@@ -82,7 +85,38 @@ public:
             }
         }
     }
+   
+   void studentTimetable() {
+    buildTimetable();
 
+    // Map of student -> courses
+    map<Student*, vector<tuple<Course*, Time*, Room*>>> studentCourses;
+
+    // Iterate over days
+    for (const auto& day : studentCourses) {
+        cout << "Day: " << day.first << endl;
+
+        // Iterate over students for the day
+        for (const auto& courseTimeRoomTuple : day.second) {
+            Student* student = get<0>(courseTimeRoomTuple)->getEnrolledStudents()[0]; // Assuming one student per course
+            studentCourses[student].push_back(courseTimeRoomTuple);
+        }
+
+        // Display student timetable for the current day
+        for (const auto& studentCoursePair : studentCourses) {
+            Student* student = studentCoursePair.first;
+            vector<tuple<Course*, Time*, Room*>> courses = studentCoursePair.second;
+            cout << "Student: " << student->getstudentname() << endl;
+            for (const auto& courseTimeRoomTuple : courses) {
+                Course* course = get<0>(courseTimeRoomTuple);
+                Time* time = get<1>(courseTimeRoomTuple);
+                Room* room = get<2>(courseTimeRoomTuple);
+                cout << "Course: " << course->getCourseName() << ", Time: " << time->getStartTime() << " - " << time->getEndTime() << ", Room: " << room->getRoomNumber() << endl;
+            }
+            cout << endl;
+        }
+    }
+}
 
     void sectionTimetable() {
         //buildTimetable();
