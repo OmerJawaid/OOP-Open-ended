@@ -36,6 +36,7 @@ public:
     Section* getAssignedSection() const;
     Time* getAssignedTime() const;
     void setAssignedSection(Section* section);
+     void setAssignedRoom(Room* room);
 
     std::vector<Student*> getEnrolledStudents() const;
 };

@@ -32,13 +32,20 @@ public:
         Section* section1 = new Section("SE-01");
         Section* section2 = new Section("SE-02");
 
+        // Create students
+        Student* student1 = new Student(301, "John", "john@example.com", "2-A");
+        Student* student2 = new Student(302, "Alice", "alice@example.com", "2-B");
+
         // Create courses and assign sections
         Course* course1 = new Course(403, "OOP", teacher1, room1);
         course1->setAssignedSection(section1);
+        course1->addStudent(student1);  // Enroll student1 in course1
         Course* course2 = new Course(404, "DS", teacher2, room1);
         course2->setAssignedSection(section2);
+        course2->addStudent(student2);  // Enroll student2 in course2
         Course* course3 = new Course(405, "Algorithms", teacher3, room1);
         course3->setAssignedSection(section1);
+        course3->addStudent(student1);  // Enroll student1 in course3
 
         // Populate timetable with courses, times, and rooms
         sectionCourses["Monday"][section1->getName()].push_back(make_tuple(course1, times[0], room1));
@@ -82,6 +89,48 @@ public:
             }
         }
     }
+   
+    void studentTimetable() {
+        buildTimetable();
+
+        // Map of student -> courses
+        map<Student*, vector<tuple<Course*, Time*, Room*>>> studentCourses;
+
+        // Iterate over days
+        for (const auto& day : sectionCourses) {
+            cout << "Day: " << day.first << endl;
+
+            // Iterate over sections for the day
+            for (const auto& sectionPair : day.second) {
+                // Iterate over courses for the section
+                for (const auto& courseTimeRoomTuple : sectionPair.second) {
+                    Course* course = get<0>(courseTimeRoomTuple);
+                    Time* time = get<1>(courseTimeRoomTuple);
+                    Room* room = get<2>(courseTimeRoomTuple);
+
+                    // Iterate over enrolled students for the course
+                    for (Student* student : course->getEnrolledStudents()) {
+                        studentCourses[student].push_back(courseTimeRoomTuple);
+                    }
+                }
+            }
+
+            // Display student timetable for the current day
+            for (const auto& studentCoursePair : studentCourses) {
+                Student* student = studentCoursePair.first;
+                vector<tuple<Course*, Time*, Room*>> courses = studentCoursePair.second;
+                cout << "Student: " << student->getstudentname() << endl;
+                for (const auto& courseTimeRoomTuple : courses) {
+                    Course* course = get<0>(courseTimeRoomTuple);
+                    Time* time = get<1>(courseTimeRoomTuple);
+                    Room* room = get<2>(courseTimeRoomTuple);
+                    cout << "Course: " << course->getCourseName() << ", Time: " << time->getStartTime() << " - " << time->getEndTime() << ", Room: " << room->getRoomNumber() << endl;
+                }
+                cout << endl;
+            }
+        }
+    }
+
 
 
     void sectionTimetable() {

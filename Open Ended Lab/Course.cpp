@@ -50,6 +50,10 @@ void Course::setAssignedSection(Section* section) {
     assignedSection = section;
 }
 
+void Course::setAssignedRoom(Room* room) {
+    room = assignedRoom;
+}
+
 std::vector<Student*> Course::getEnrolledStudents() const {
     return enrolledStudents;
 }
