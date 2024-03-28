@@ -52,6 +52,16 @@ public:
         sectionCourses["Monday"][section2->getName()].push_back(make_tuple(course2, times[1], room3));
         sectionCourses["Tuesday"][section1->getName()].push_back(make_tuple(course3, times[0], room2));
     }
+    vector<Time*> createTimeSlots() {
+        vector<Time*> times;
+        times.push_back(new Time("8:30", "9:30"));
+        times.push_back(new Time("9:30", "10:30"));
+        times.push_back(new Time("10:30", "11:30"));
+        times.push_back(new Time("11:30", "12:30"));
+        times.push_back(new Time("12:30", "1:30"));
+        times.push_back(new Time("1:30", "2:30"));
+        return times;
+    }
 
     void teacherTimetable() {
         buildTimetable();
@@ -132,16 +142,7 @@ public:
        
     }
 
-    vector<Time*> createTimeSlots() {
-        vector<Time*> times;
-        times.push_back(new Time("8:30", "9:30"));
-        times.push_back(new Time("9:30", "10:30"));
-        times.push_back(new Time("10:30", "11:30"));
-        times.push_back(new Time("11:30", "12:30"));
-        times.push_back(new Time("12:30", "1:30"));
-        times.push_back(new Time("1:30", "2:30"));
-        return times;
-    }
+    
     void roomTimetable() {
         // Build the timetable
         buildTimetable();
@@ -201,4 +202,66 @@ public:
             }
         }
     }
+
+    void whoIsTeachingAt(string day, string time) {
+        buildTimetable();
+        cout << "Courses and Details at " << time << " on " << day << ":" << endl;
+
+        // Check if the provided day exists in the sectionCourses map
+        if (sectionCourses.find(day) != sectionCourses.end()) {
+            // Iterate over sections for the given day
+            for (const auto& sectionPair : sectionCourses[day]) {
+                // Iterate over courses for the section
+                for (const auto& courseTimeRoomTuple : sectionPair.second) {
+                    Time* courseTime = get<1>(courseTimeRoomTuple);
+                    // Check if the course starts at the provided time
+                    if (courseTime->getStartTime() == time) {
+                        Course* course = get<0>(courseTimeRoomTuple);
+                        Room* room = get<2>(courseTimeRoomTuple);
+                        Teacher* teacher = course->getTeacher();
+
+                        cout << "Course: " << course->getCourseName() << endl;
+                        cout << "Teacher: " << teacher->getName() << endl;
+                        cout << "Room: " << room->getRoomNumber() << endl;
+                        cout << "Section: " << sectionPair.first << endl;
+                        // Add more details as needed
+                        cout << "Time: " << courseTime->getStartTime() << " - " << courseTime->getEndTime() << endl;
+                        cout << endl;
+                    }
+                }
+            }
+        }
+        else {
+            cout << "No courses scheduled for " << day << endl;
+        }
+    }
+
+
+
+    void getTimeTableForDay(string day) {
+        buildTimetable();
+        cout << "Timetable for " << day << ":" << endl;
+
+        // Check if the provided day exists in the sectionCourses map
+        if (sectionCourses.find(day) != sectionCourses.end()) {
+            // Iterate over sections for the given day
+            for (const auto& sectionPair : sectionCourses[day]) {
+                string sectionName = sectionPair.first;
+                cout << "Section: " << sectionName << endl;
+
+                // Iterate over courses for the section
+                for (const auto& courseTimeRoomTuple : sectionPair.second) {
+                    Course* course = get<0>(courseTimeRoomTuple);
+                    Time* time = get<1>(courseTimeRoomTuple);
+                    Room* room = get<2>(courseTimeRoomTuple);
+                    cout << "Course: " << course->getCourseName() << ", Time: " << time->getStartTime() << " - " << time->getEndTime() << ", Room: " << room->getRoomNumber() << endl;
+                }
+                cout << endl;
+            }
+        }
+        else {
+            cout << "No courses scheduled for " << day << endl;
+        }
+    }
+
 };
