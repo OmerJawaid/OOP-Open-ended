@@ -1,0 +1,4 @@
+Teacher: Waleed, Course: OOP Lab, Time: 12:30 - 1:30, Room: 4-01 Lab
+Teacher: Tamim, Course: OOP, Time: 11:30 - 12:30, Room: 4-02 Lab
+Teacher: Waleed, Course: OOP Lab, Time: 8:30 - 9:30, Room: 4-01 Lab
+Teacher: Tamim, Course: OOP, Time: 10:30 - 11:30, Room: 4-02 Lab

@@ -3,64 +3,103 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <algorithm>
 #include "Course.h"
 #include "Teacher.h"
 #include "Room.h"
 #include "Time.h"
 #include "Section.h"
-#include"Room.h"
+#include "Student.h"
+#include <fstream>
+#include <sstream>
 using namespace std;
 
 class Timetable {
 private:
-    map<std::string, std::map<std::string, std::vector<std::tuple<Course*, Time*, Room*>>>> sectionCourses;
+   
 
 public:
+    map<std::string, std::map<std::string, std::vector<std::tuple<Course*, Time*, Room*>>>> sectionCourses;
     void buildTimetable() {
-        Room* room1 = new Room("4-01", 50);
-        Room* room2 = new Room("4-02", 50);
-        Room* room3 = new Room("4-03", 50);
-        Room* room4 = new Room("4-04", 50);
+        // Define rooms
+        Room* room1 = new Room("4-17", 50);
+        Room* room2 = new Room("4-18", 50);
+        Room* room3 = new Room("4-19", 50);
+        Room* room4 = new Room("4-01 Lab", 50);
+        Room* room5 = new Room("4-02 Lab", 50);
 
+        // Define teachers
         Teacher* teacher1 = new Teacher("Waleed", 201, "Waleed123@gmail.com");
-        Teacher* teacher2 = new Teacher("Tamim", 200, "Tamim@gmail.com");
-        Teacher* teacher3 = new Teacher("Ds wali mam", 150, "ds@gmail.com");
+        Teacher* teacher2 = new Teacher("Tamim", 202, "Tamim@gmail.com");
+        Teacher* teacher3 = new Teacher("Sadaf", 203, "Sadaf@gmail.com");
+        Teacher* teacher4 = new Teacher("Awais", 204, "Awais@gmail.com");
 
+        // Define time slots
         vector<Time*> times = createTimeSlots();
 
-        
+        // Define sections
         Section* section1 = new Section("SE-01");
         Section* section2 = new Section("SE-02");
 
-        
+        // Define students
         Student* student1 = new Student(301, "Ahmad", "ahmad@gmail.com", "2-A");
-        Student* student2 = new Student(302, "omer", "omer@gmail.com", "2-B");
+        section1->addStudent(student1);
+        Student* student2 = new Student(302, "Omer", "omer@gmail.com", "2-A");
+        section1->addStudent(student2);
+        // Define more students if needed...
 
-        
-        Course* course1 = new Course(403, "OOP", teacher1, room1);
+        // Define courses
+        Course* course1 = new Course(403, "OOP Lab", teacher1, room1);
         course1->setAssignedSection(section1);
-        course1->addStudent(student1);  
-        Course* course2 = new Course(404, "DS", teacher2, room1);
-        course2->setAssignedSection(section2);
-        course2->addStudent(student2);  
-        Course* course3 = new Course(405, "Algorithms", teacher3, room1);
-        course3->setAssignedSection(section1);
-        course3->addStudent(student1);  
+        course1->addStudent(student1);
+        course1->addStudent(student2);
 
-    
-        sectionCourses["Monday"][section1->getName()].push_back(make_tuple(course1, times[0], room1));
-        sectionCourses["Monday"][section2->getName()].push_back(make_tuple(course2, times[1], room3));
-        sectionCourses["Tuesday"][section1->getName()].push_back(make_tuple(course3, times[0], room2));
+        Course* course2 = new Course(404, "OOP", teacher2, room1);
+        course2->setAssignedSection(section1);
+        course2->addStudent(student1);
+        course2->addStudent(student2);
+        // Define more courses if needed...
+
+        // Schedule courses
+        scheduleCourse(course1, times, room4);
+        scheduleCourse(course2, times, room5);
+        // Schedule more courses if needed...
     }
-    vector<Time*> createTimeSlots() {
-        vector<Time*> times;
-        times.push_back(new Time("8:30", "9:30"));
-        times.push_back(new Time("9:30", "10:30"));
-        times.push_back(new Time("10:30", "11:30"));
-        times.push_back(new Time("11:30", "12:30"));
-        times.push_back(new Time("12:30", "1:30"));
-        times.push_back(new Time("1:30", "2:30"));
-        return times;
+
+    void scheduleCourse(Course* course, vector<Time*>& times, Room* room) {
+        // Shuffle time slots to randomize scheduling
+        random_shuffle(times.begin(), times.end());
+
+        // Find an available time slot
+        Time* chosenTime = nullptr;
+        for (Time* time : times) {
+            bool conflict = false;
+            for (const auto& day : sectionCourses) {
+                for (const auto& sectionPair : day.second) {
+                    for (const auto& courseTimeRoomTuple : sectionPair.second) {
+                        Time* existingTime = get<1>(courseTimeRoomTuple);
+                        if (existingTime->getStartTime() == time->getStartTime() && existingTime->getEndTime() == time->getEndTime()) {
+                            conflict = true;
+                            break;
+                        }
+                    }
+                    if (conflict) break;
+                }
+                if (conflict) break;
+            }
+            if (!conflict) {
+                chosenTime = time;
+                break;
+            }
+        }
+
+        if (chosenTime) {
+            Section* section = course->getAssignedSection();
+            sectionCourses["Monday"][section->getName()].push_back(make_tuple(course, chosenTime, room));
+        }
+        else {
+            cout << "Unable to schedule course: " << course->getCourseName() << endl;
+        }
     }
 
     void teacherTimetable() {
@@ -86,7 +125,7 @@ public:
             for (const auto& teacherCoursePair : teacherCourses) {
                 Teacher* teacher = teacherCoursePair.first;
                 vector<tuple<Course*, Time*, Room*>> courses = teacherCoursePair.second;
-                if (teacher->getName() == "Tamim") {
+                /*if (teacher->getName() == "Tamim") {*/
                     cout << "Teacher: " << teacher->getName() << endl;
                     for (const auto& courseTimeRoomTuple : courses) {
                         Course* course = get<0>(courseTimeRoomTuple);
@@ -94,7 +133,7 @@ public:
                         Room* room = get<2>(courseTimeRoomTuple);
                         cout << "Course: " << course->getCourseName() << ", Time: " << time->getStartTime() << " - " << time->getEndTime() << ", Room: " << room->getRoomNumber() << endl;
                     }
-                }
+               /* }*/
                 cout << endl;
             }
         }
@@ -139,7 +178,30 @@ public:
 
 
     void sectionTimetable() {
-       
+            // Build the timetable
+            buildTimetable();
+
+            // Iterate over days
+            for (const auto& day : sectionCourses) {
+                cout << "Day: " << day.first << endl;
+
+                // Iterate over sections for the day
+                for (const auto& sectionPair : day.second) {
+                    string sectionName = sectionPair.first;
+                    cout << "Section: " << sectionName << endl;
+
+                    // Iterate over courses for the section
+                    for (const auto& courseTimeRoomTuple : sectionPair.second) {
+                        Course* course = get<0>(courseTimeRoomTuple);
+                        Time* time = get<1>(courseTimeRoomTuple);
+                        Room* room = get<2>(courseTimeRoomTuple);
+
+                        cout << "Course: " << course->getCourseName() << ", Time: " << time->getStartTime() << " - " << time->getEndTime() << ", Room: " << room->getRoomNumber() << endl;
+                    }
+                    cout << endl;
+                }
+            }
+
     }
 
     
@@ -263,5 +325,74 @@ public:
             cout << "No courses scheduled for " << day << endl;
         }
     }
+    vector<Time*> createTimeSlots() {
+        vector<Time*> times;
+        times.push_back(new Time("8:30", "9:30"));
+        times.push_back(new Time("9:30", "10:30"));
+        times.push_back(new Time("10:30", "11:30"));
+        times.push_back(new Time("11:30", "12:30"));
+        times.push_back(new Time("12:30", "1:30"));
+        times.push_back(new Time("1:30", "2:30"));
+        return times;
+    }
+
+
+
+    void writeTimetableToFile(const std::string& filename, const std::string& content) {
+        std::ofstream outfile("timetable.txt");
+        if (outfile.is_open()) {
+            outfile << content;
+            outfile.close();
+            std::cout << "Timetable written to file: " << "timetable.txt" << std::endl;
+        }
+        else {
+            std::cerr << "Unable to open file: " << "timetable.txt" << std::endl;
+        }
+    }
+
+    void writeTeacherTimetableToFile() {
+        // Build teacher timetable
+        stringstream timetableContent;
+        // Iterate over days and sections to build timetable content
+        for (const auto& day : sectionCourses) {
+            for (const auto& sectionPair : day.second) {
+                for (const auto& courseTimeRoomTuple : sectionPair.second) {
+                    Teacher* teacher = get<0>(courseTimeRoomTuple)->getTeacher();
+                    Course* course = get<0>(courseTimeRoomTuple);
+                    Time* time = get<1>(courseTimeRoomTuple);
+                    Room* room = get<2>(courseTimeRoomTuple);
+                    timetableContent << "Teacher: " << teacher->getName() << ", Course: " << course->getCourseName() << ", Time: " << time->getStartTime() << " - " << time->getEndTime() << ", Room: " << room->getRoomNumber() << std::endl;
+                }
+            }
+        }
+        // Write content to file
+        writeTimetableToFile("teacher_timetable.txt", timetableContent.str());
+    }
+
+    void writeStudentTimetableToFile() {
+        // Build student timetable
+        std::stringstream timetableContent;
+        // Iterate over days and sections to build timetable content
+        for (const auto& day : sectionCourses) {
+            for (const auto& sectionPair : day.second) {
+                for (const auto& courseTimeRoomTuple : sectionPair.second) {
+                    Course* course = get<0>(courseTimeRoomTuple);
+                    Time* time = get<1>(courseTimeRoomTuple);
+                    Room* room = get<2>(courseTimeRoomTuple);
+                    for (Student* student : course->getEnrolledStudents()) {
+                        timetableContent << "Student: " << student->getstudentname() << ", Course: " << course->getCourseName() << ", Time: " << time->getStartTime() << " - " << time->getEndTime() << ", Room: " << room->getRoomNumber() << std::endl;
+                    }
+                }
+            }
+        }
+        // Write content to file
+        writeTimetableToFile("student_timetable.txt", timetableContent.str());
+    }
+
+
+
+
+
+
 
 };

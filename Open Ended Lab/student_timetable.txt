@@ -1,0 +1,8 @@
+Student: Ahmad, Course: OOP Lab, Time: 12:30 - 1:30, Room: 4-01 Lab
+Student: Omer, Course: OOP Lab, Time: 12:30 - 1:30, Room: 4-01 Lab
+Student: Ahmad, Course: OOP, Time: 11:30 - 12:30, Room: 4-02 Lab
+Student: Omer, Course: OOP, Time: 11:30 - 12:30, Room: 4-02 Lab
+Student: Ahmad, Course: OOP Lab, Time: 8:30 - 9:30, Room: 4-01 Lab
+Student: Omer, Course: OOP Lab, Time: 8:30 - 9:30, Room: 4-01 Lab
+Student: Ahmad, Course: OOP, Time: 10:30 - 11:30, Room: 4-02 Lab
+Student: Omer, Course: OOP, Time: 10:30 - 11:30, Room: 4-02 Lab

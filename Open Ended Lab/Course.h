@@ -19,6 +19,7 @@ private:
     Section* assignedSection;
     Time* assignedTime;
 
+
 public:
     std::vector<Student*> enrolledStudents;
 
@@ -33,9 +34,16 @@ public:
     int getCourseCode() const;
     Teacher* getTeacher() const;
     Room* getAssignedRoom() const;
-    Section* getAssignedSection() const;
+    /*Section* getAssignedSection() const;*/
+    void setAssignedSection(Section* section) {
+        assignedSection = section;
+    }
+
+    Section* getAssignedSection() const {
+        return assignedSection;
+    }
     Time* getAssignedTime() const;
-    void setAssignedSection(Section* section);
+    /*void setAssignedSection(Section* section);*/
      void setAssignedRoom(Room* room);
 
     std::vector<Student*> getEnrolledStudents() const;

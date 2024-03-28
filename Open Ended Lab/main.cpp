@@ -1,4 +1,5 @@
 #include<iostream>
+#include<fstream>
 #include<map>
 #include<vector>
 #include "Student.h"
@@ -8,6 +9,7 @@
 #include "Timetable.h"
 #include "Section.h"
 #include "Time.h"
+using namespace std;
 int main() {
 	Student student1(201, "Omer", "omerjawaid0@gmail.com", "2-A");
 	Teacher* teacher1 = new Teacher("Waleed", 201, "Waleed123@gmail.com");
@@ -41,6 +43,7 @@ int main() {
 		}
 		else if (generationchoice == "2")
 		{
+			timetable1.sectionTimetable();
 		}
 		else if (generationchoice == "3")
 		{
@@ -79,11 +82,19 @@ int main() {
 		}
 		else if (generationchoice == "6")
 		{
-			return 0;
+			break;
 		}
 		else
 		{
 			cout << "Invalid choice" << endl;
 		}
+
 	} while (generationchoice != "6");
+	timetable1.teacherTimetable(); // Print teacher timetable
+	timetable1.studentTimetable(); // Print student timetable
+	timetable1.writeTeacherTimetableToFile(); // Write teacher timetable to file
+	timetable1.writeStudentTimetableToFile();
+
+	system("pause");
+	return 0;
 }

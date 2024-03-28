@@ -38,17 +38,17 @@ Room* Course::getAssignedRoom() const {
     return assignedRoom;
 }
 
-Section* Course::getAssignedSection() const {
-    return assignedSection;
-}
+//Section* Course::getAssignedSection() const {
+//    return assignedSection;
+//}
 
 Time* Course::getAssignedTime() const {
     return assignedTime;
 }
 
-void Course::setAssignedSection(Section* section) {
-    assignedSection = section;
-}
+//void Course::setAssignedSection(Section* section) {
+//    assignedSection = section;
+//}
 
 void Course::setAssignedRoom(Room* room) {
     room = assignedRoom;
