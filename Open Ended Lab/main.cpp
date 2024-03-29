@@ -9,21 +9,45 @@
 #include "Timetable.h"
 #include "Section.h"
 #include "Time.h"
+#include <string>
+#include <cstdlib>
 using namespace std;
+const string DATABASE_FILE = "users.txt";
+bool login();
+void signup();
 int main() {
-	Student student1(201, "Omer", "omerjawaid0@gmail.com", "2-A");
-	Teacher* teacher1 = new Teacher("Waleed", 201, "Waleed123@gmail.com");
-	Room room1("202", 50);
-	Course course1(201, "OOP", teacher1, &room1);	/*Course(int courseCode, const string & coursename, Teacher * teacher, Room * assignedRoom)*/
-	Course course2(202, "DS", teacher1, &room1);
-	course1.addStudent(&student1);
-	course1.viewStudents();
-	teacher1->assignCourse(&course1);
-	teacher1->assignCourse(&course2);
-	teacher1->viewCourse(&course1);
+	int choice;
+	bool loggedIn = false;
+
+	do {
+		cout << "Welcome to the program!" << endl;
+		cout << "1. Signup" << endl;
+		cout << "2. Login" << endl;
+		cout << "Enter your choice: ";
+		cin >> choice;
+
+		switch (choice) {
+		case 1:
+			signup();
+			system("CLS");
+			break;
+		case 2:
+			loggedIn = login();
+			if (loggedIn) {
+				cout << "Login Successful" << endl;
+			}
+			else {
+				cout << "Login Failed" << endl;
+			}
+			break;
+		default:
+			cout << "Invalid choice! Please enter 1 or 2." << endl;
+		}
+	} while (!loggedIn);
+	
 	Timetable timetable1;
 	string generationchoice;
-	vector<Teacher*> teachers = { teacher1 };
+	
 	cout << "Welcome to University Timetable System" << endl;
 	do {
 		cout << "----------------------------------------" << endl
@@ -97,4 +121,49 @@ int main() {
 
 	system("pause");
 	return 0;
+}
+void signup() {
+	cout << "---------SIGNUP----------" << endl;
+	string username, password;
+	cout << "Enter User Name: ";
+	cin >> username;
+	cout << "Enter Password: ";
+	cin >> password;
+
+
+	ofstream outfile(DATABASE_FILE, ios::app);
+	if (outfile.is_open()) {
+		outfile << username << " " << password << endl;
+		cout << "Signup Successful!" << endl;
+		outfile.close();
+	}
+	else {
+		cerr << "Error: Unable to open database file!" << endl;
+	}
+}
+
+
+bool login() {
+	cout << "------------LOGIN------------" << endl;
+	string username, password;
+	cout << "Enter User Name: ";
+	cin >> username;
+	cout << "Enter Password: ";
+	cin >> password;
+
+	ifstream infile(DATABASE_FILE);
+	if (infile.is_open()) {
+		string storedUsername, storedPassword;
+		while (infile >> storedUsername >> storedPassword) {
+			if (username == storedUsername && password == storedPassword) {
+				infile.close();
+				return true;
+			}
+		}
+		infile.close();
+	}
+	else {
+		cerr << "Error: Unable to open database file!" << endl;
+	}
+	return false;
 }
